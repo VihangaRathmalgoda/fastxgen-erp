@@ -1,0 +1,87 @@
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filterBar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+}
+
+.search {
+  flex: 1 1 260px;
+}
+
+.listCard {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.table {
+  min-width: 820px;
+}
+
+.table th,
+.table td,
+.table th:first-child,
+.table td:first-child,
+.table th:last-child,
+.table td:last-child {
+  padding: 14px 16px;
+}
+
+.table thead tr {
+  background: var(--surface-head);
+}
+
+.table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.sku {
+  font-size: 13px;
+  color: var(--ink-2);
+}
+
+.name {
+  font-weight: 500;
+}
+
+.category {
+  color: var(--ink-2);
+}
+
+.stock {
+  font-weight: 600;
+}
+
+.pager {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--line-soft);
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.pagerButtons {
+  display: flex;
+  gap: 6px;
+}
+
+.pagerButtons :global(.btn) {
+  font-weight: 400;
+}

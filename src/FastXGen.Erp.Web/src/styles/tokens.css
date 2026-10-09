@@ -1,0 +1,52 @@
+/* Design tokens taken from the "FastXGen ERP Screens" design canvas. */
+:root {
+  --font-sans: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+  --navy: #0f1b2d;
+  --navy-raised: #1c2b42;
+  --navy-hover: #18273d;
+  --navy-line: #22324a;
+  --navy-border: #34465f;
+  --navy-avatar: #2a3b55;
+  --on-navy: #ffffff;
+  --on-navy-muted: #c9d2de;
+  --on-navy-subtle: #93a1b5;
+
+  --brand: #0b7a64;
+  --brand-text: #0b6b58;
+  --brand-text-hover: #084c3f;
+  --brand-soft: #e3f3ef;
+  --brand-tint: #f3faf8;
+  --brand-chart: #a9d8cc;
+  --brand-check: #5fc7ae;
+  --disabled: #8fa3a0;
+
+  --ink: #121820;
+  --ink-2: #3b4552;
+  --muted: #5b6573;
+
+  --bg: #f4f6f8;
+  --bg-sunken: #eef1f4;
+  --surface: #ffffff;
+  --surface-head: #f7f9fb;
+
+  --line: #e3e7ec;
+  --line-soft: #eef1f4;
+  --line-tile: #dce1e8;
+  --line-field: #d5dbe3;
+  --line-input: #c9d1db;
+
+  --warn: #8a4105;
+  --warn-soft: #fdf1e3;
+  --warn-dot: #b45309;
+  --danger: #b42318;
+  --danger-soft: #fdecea;
+  --info-ink: #1f3a5c;
+  --info-soft: #eaf2fb;
+
+  --radius-sm: 8px;
+  --radius: 10px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+}

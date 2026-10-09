@@ -3,7 +3,7 @@
 Multi-tenant SaaS ERP for retail shops, distributors, service businesses and multi-branch organisations:
 POS, sales, purchasing, inventory, finance, tax and configurable reporting.
 
-**Stack:** ASP.NET Core (.NET 10) Web API · SQL Server with stored procedures (Dapper) · React + TypeScript (planned)
+**Stack:** ASP.NET Core (.NET 10) Web API · SQL Server with stored procedures (Dapper) · React + TypeScript (Vite)
 
 ## Start here
 
@@ -26,6 +26,7 @@ src/
   FastXGen.Erp.Infrastructure   clock, identity, email, storage, integrations
   FastXGen.Erp.Persistence      repositories calling stored procedures
   FastXGen.Erp.Api              controllers, middleware, composition root
+  FastXGen.Erp.Web              React + TypeScript web app (Vite)
 database/
   FastXGen.Erp.Database         tables, procedures, types (SQL project, builds offline)
 tests/

@@ -1,0 +1,409 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-sunken);
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 24px;
+  background: var(--navy);
+  color: var(--on-navy);
+}
+
+.brand,
+.brand:hover {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--on-navy);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.logo {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  background: var(--brand);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.headerMeta {
+  font-size: 14px;
+  color: var(--on-navy-muted);
+}
+
+.headerActions {
+  margin-left: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.headerButton,
+.headerButton:hover {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 14px;
+  border: 1px solid var(--navy-border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--on-navy);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.closeShift,
+.closeShift:hover {
+  border-color: transparent;
+  background: var(--navy-raised);
+}
+
+.body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 16px 24px 24px;
+}
+
+.catalog {
+  flex: 999 1 560px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.scan {
+  position: relative;
+}
+
+.scan input {
+  width: 100%;
+  height: 52px;
+  padding: 0 16px 0 48px;
+  border: 2px solid var(--brand);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  font-size: 16px;
+}
+
+.scan svg {
+  position: absolute;
+  left: 16px;
+  top: 15px;
+  color: var(--brand-text);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chips button {
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid var(--line-input);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.chips button[aria-pressed='true'] {
+  border-color: var(--navy);
+  background: var(--navy);
+  color: #ffffff;
+}
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
+  gap: 12px;
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px;
+  min-height: 128px;
+  border: 1px solid var(--line-tile);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  color: var(--ink);
+  text-align: left;
+}
+
+.tile:hover {
+  border-color: var(--brand);
+}
+
+.sku {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.tileName {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.tileFoot {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 12px;
+}
+
+.tileFoot :global(.mono) {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.stockLow {
+  color: var(--warn);
+}
+
+.bill {
+  flex: 1 1 380px;
+  min-width: 0;
+  max-width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--line-tile);
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+.billHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.billTitle {
+  display: flex;
+  flex-direction: column;
+  font-size: 13px;
+}
+
+.billTitle h2 {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.lines {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 4px 20px;
+  min-height: 240px;
+}
+
+.empty {
+  padding: 48px 0;
+  text-align: center;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.line {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.lineText {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.lineName {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.unit {
+  font-size: 12px;
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.stepper button {
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--line-input);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 18px;
+}
+
+.stepper span {
+  min-width: 28px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.lineTotal {
+  min-width: 96px;
+  text-align: right;
+  font-weight: 600;
+}
+
+.billFoot {
+  padding: 16px 20px 20px;
+  border-top: 1px solid var(--line-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.summary {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.summary > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.totalRow {
+  padding-top: 6px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.totalRow :global(.mono) {
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.taxNote {
+  font-size: 12px;
+}
+
+.methods {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.methods button {
+  height: 44px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line-input);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.methods button[aria-pressed='true'] {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+  color: var(--brand-text);
+}
+
+.chargeRow {
+  display: flex;
+  gap: 8px;
+}
+
+.hold {
+  height: 56px;
+  font-size: 15px;
+}
+
+.charge {
+  flex: 1 1 auto;
+  height: 56px;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.paid {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 40px 28px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.paid h2 {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.paidIcon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--brand-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.invoiceNo {
+  font-size: 15px;
+  color: var(--ink-2);
+}
+
+.paidTotal {
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.paidActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+@media (max-width: 600px) {
+  .header,
+  .body {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}

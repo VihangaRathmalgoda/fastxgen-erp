@@ -21,4 +21,4 @@ New ADR: copy `0000-template.md`, take the next number, open it in the same PR a
 | [0012](0012-input-validation-and-api-hardening.md) | Input validation and API hardening | Accepted |
 | [0013](0013-user-messages-and-notifications.md) | User messages, alerts and notifications | Accepted |
 | [0014](0014-authentication.md) | Authentication: ASP.NET Core Identity with stored-procedure stores | Accepted |
-| 0015 | Frontend stack details (UI kit, offline POS) | **Open**, decide before frontend scaffold |
+| [0015](0015-frontend-stack.md) | Frontend: React + TypeScript, Vite, custom CSS (offline POS open) | Accepted |

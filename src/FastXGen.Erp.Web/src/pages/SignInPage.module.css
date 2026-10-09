@@ -1,0 +1,245 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.hero {
+  flex: 1 1 420px;
+  background: var(--navy);
+  color: var(--on-navy);
+  padding: 48px 56px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius);
+  background: var(--brand);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.pitch {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 520px;
+}
+
+.pitch h1 {
+  font-size: 40px;
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.pitch p {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--on-navy-muted);
+}
+
+.highlights {
+  margin: 0 0 auto;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  font-size: 15px;
+  color: var(--on-navy-muted);
+}
+
+.highlights li {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.formArea {
+  flex: 1 1 480px;
+  padding: 48px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.panel {
+  width: 100%;
+  max-width: 420px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.panelHead {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.panelHead h2 {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.tabs button {
+  height: 40px;
+  font-size: 14px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form :global(.field) {
+  font-size: 15px;
+}
+
+.passwordHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.remember {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--ink-2);
+}
+
+.remember input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--brand);
+}
+
+.note {
+  font-size: 13px;
+  text-align: center;
+}
+
+.till {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--bg);
+  border-radius: var(--radius);
+}
+
+.tillText {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+}
+
+.tillText strong {
+  font-weight: 600;
+}
+
+.tillText span {
+  font-size: 12px;
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  padding: 6px 0;
+}
+
+.dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--brand);
+}
+
+.dotFilled {
+  background: var(--brand);
+}
+
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.key {
+  height: 56px;
+  border: 1px solid var(--line-field);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.key:hover {
+  background: var(--bg);
+}
+
+.pinHint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  border-radius: var(--radius);
+  background: var(--line);
+  color: var(--muted);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .hero {
+    padding: 32px 16px;
+  }
+
+  .pitch h1 {
+    font-size: 30px;
+  }
+
+  .formArea {
+    padding: 32px 16px;
+  }
+
+  .panel {
+    padding: 24px 20px;
+  }
+}

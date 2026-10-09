@@ -24,6 +24,17 @@ dotnet test FastXGen.Erp.slnx                                    # database test
 dotnet format FastXGen.Erp.slnx                                  # fix formatting before committing
 ```
 
+## Web app (ADR 0015)
+
+Needs Node.js 22 or later.
+
+```powershell
+cd src/FastXGen.Erp.Web
+npm ci              # exact versions from package-lock.json
+npm run dev         # http://localhost:5173 (/sign-in, /, /pos, /products, /rules)
+npm run build       # type-check and production build into dist/
+```
+
 ## Where a database may run (ADR 0011)
 
 | Machine | Database |

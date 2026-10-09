@@ -21,15 +21,20 @@
   - Identifiers (ADR 0006): identity records use sequential GUIDs (users already do), business records
     BIGINT, documents get display numbers; tenant INT internally + GUID publicly.
   - Tests: 92 passing without a database; 9 database tests (tenant isolation, session context) run in CI.
+- **Frontend screens from the design canvas** (`chore/foundation`)
+  - ADR 0015: React + TypeScript with Vite, React Router, custom CSS with design tokens, no UI kit.
+  - `src/FastXGen.Erp.Web`: sign in (email and cashier PIN), owner dashboard, POS checkout,
+    products and stock, reporting rule (draft, validate, simulate, publish), with sample data only.
 
 ## Decisions pending
 
-- ADR 0015, frontend: UI kit (MUI / Ant Design / custom) and whether offline POS is in the MVP.
+- Offline POS (PWA + local queue) in the MVP or not (ADR 0015); decide before the POS sale slice.
 
 ## Known shortcuts
 
 - Notification endpoints, real-time push and e-mail/SMS delivery wait for authentication (ADR 0013).
 - `ERP.Reporting` and `ERP.BackgroundJobs` projects are deferred until first needed (ADR 0001).
+- Web screens use sample data in `src/data/sampleData.ts`; no API calls, auth or tests yet. Not in CI yet.
 
 ## Next slice
 
