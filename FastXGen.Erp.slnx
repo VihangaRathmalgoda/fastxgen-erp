@@ -1,0 +1,18 @@
+<Solution>
+  <Folder Name="/database/">
+    <Project Path="database/FastXGen.Erp.Database/FastXGen.Erp.Database.sqlproj" Type="42ea0dbd-9cf1-443e-919e-be9c484e4577" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/FastXGen.Erp.Api/FastXGen.Erp.Api.csproj" />
+    <Project Path="src/FastXGen.Erp.Application/FastXGen.Erp.Application.csproj" />
+    <Project Path="src/FastXGen.Erp.Contracts/FastXGen.Erp.Contracts.csproj" />
+    <Project Path="src/FastXGen.Erp.Domain/FastXGen.Erp.Domain.csproj" />
+    <Project Path="src/FastXGen.Erp.Infrastructure/FastXGen.Erp.Infrastructure.csproj" />
+    <Project Path="src/FastXGen.Erp.Persistence/FastXGen.Erp.Persistence.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/FastXGen.Erp.ArchitectureTests/FastXGen.Erp.ArchitectureTests.csproj" />
+    <Project Path="tests/FastXGen.Erp.IntegrationTests/FastXGen.Erp.IntegrationTests.csproj" />
+    <Project Path="tests/FastXGen.Erp.UnitTests/FastXGen.Erp.UnitTests.csproj" />
+  </Folder>
+</Solution>

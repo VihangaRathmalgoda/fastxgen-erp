@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Infrastructure: clock, identity, email, storage, external integrations. No database access. -->
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FastXGen.Erp.Application\FastXGen.Erp.Application.csproj" />
+  </ItemGroup>
+</Project>

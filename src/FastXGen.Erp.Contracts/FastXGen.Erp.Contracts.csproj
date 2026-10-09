@@ -1,0 +1,3 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Contracts: public API request/response shapes. References NOTHING. -->
+</Project>
