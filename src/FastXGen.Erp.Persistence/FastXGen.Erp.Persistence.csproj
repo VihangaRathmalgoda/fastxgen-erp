@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Persistence: the ONLY project that talks to SQL Server, and only through stored procedures. -->
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Dapper" />
+    <PackageReference Include="Microsoft.Data.SqlClient" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FastXGen.Erp.Application\FastXGen.Erp.Application.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="FastXGen.Erp.UnitTests" />
+    <InternalsVisibleTo Include="FastXGen.Erp.IntegrationTests" />
+  </ItemGroup>
+</Project>

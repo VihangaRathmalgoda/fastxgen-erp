@@ -1,0 +1,81 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    # Disposable SQL Server for database tests. It exists only for this job (ADR 0011).
+    # The fallback password protects nothing real: the container is private to the job and destroyed after it.
+    # Set the CI_SQL_SA_PASSWORD repository secret to override it.
+    services:
+      sql:
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        env:
+          ACCEPT_EULA: "Y"
+          MSSQL_SA_PASSWORD: ${{ secrets.CI_SQL_SA_PASSWORD || 'Ci_Only_Passw0rd!' }}
+        ports:
+          - 1433:1433
+        options: >-
+          --health-cmd "/opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P \"$MSSQL_SA_PASSWORD\" -Q 'SELECT 1'"
+          --health-interval 10s --health-timeout 5s --health-retries 10
+
+    env:
+      DOTNET_NOLOGO: true
+      CI_SQL_PASSWORD: ${{ secrets.CI_SQL_SA_PASSWORD || 'Ci_Only_Passw0rd!' }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Restore
+        run: dotnet restore FastXGen.Erp.slnx
+
+      - name: Check formatting
+        run: dotnet format FastXGen.Erp.slnx --verify-no-changes --no-restore
+
+      - name: Build (warnings as errors, SQL project validated)
+        run: dotnet build FastXGen.Erp.slnx -c Release --no-restore
+
+      # Database tests skip themselves here: Database__ConnectionString is not set yet.
+      - name: Unit, architecture and API tests
+        run: dotnet test FastXGen.Erp.slnx -c Release --no-build --filter "Category!=Database"
+
+      - name: Deploy database to the CI SQL Server
+        run: |
+          dotnet tool restore
+          dotnet sqlpackage /Action:Publish \
+            /SourceFile:database/FastXGen.Erp.Database/bin/Release/FastXGen.Erp.Database.dacpac \
+            /TargetConnectionString:"Server=localhost,1433;Database=FastXGenErp_Ci;User Id=sa;Password=$CI_SQL_PASSWORD;TrustServerCertificate=True"
+
+      - name: Database tests
+        env:
+          Database__ConnectionString: Server=localhost,1433;Database=FastXGenErp_Ci;User Id=sa;Password=${{ env.CI_SQL_PASSWORD }};TrustServerCertificate=True
+        run: dotnet test FastXGen.Erp.slnx -c Release --no-build --filter "Category=Database"
+
+      - name: Vulnerable package scan
+        run: |
+          dotnet list FastXGen.Erp.slnx package --vulnerable --include-transitive 2>&1 | tee vulnerable.txt
+          if grep -q "has the following vulnerable packages" vulnerable.txt; then exit 1; fi
+
+      - name: Publish SQL scripts
+        uses: actions/upload-artifact@v4
+        with:
+          name: database-scripts
+          path: |
+            database/FastXGen.Erp.Database/bin/Release/*.dacpac
+            database/FastXGen.Erp.Database/bin/Release/*_Create.sql

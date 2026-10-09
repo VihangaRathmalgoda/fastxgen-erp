@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.Build.Sql/2.3.0">
+  <!--
+    The database as code. One file per object, grouped by schema:
+      <schema>/<schema>.sql, <schema>/Tables, Views, Functions, StoredProcedures, Types
+    Building validates every object offline (no server needed) and produces a .dacpac.
+    Nobody edits a shared database by hand. See docs/standards/database-standards.md.
+  -->
+  <PropertyGroup>
+    <Name>FastXGen.Erp.Database</Name>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql160DatabaseSchemaProvider</DSP>
+    <ModelCollation>1033, CI</ModelCollation>
+    <DefaultCollation>SQL_Latin1_General_CP1_CI_AS</DefaultCollation>
+    <TreatTSqlWarningsAsErrors>true</TreatTSqlWarningsAsErrors>
+    <!-- Also emit one ordered CREATE script (bin/<config>/FastXGenErp_Create.sql) for manual review/deployment. -->
+    <GenerateCreateScript>true</GenerateCreateScript>
+    <TargetDatabaseName>FastXGenErp</TargetDatabaseName>
+    <!-- Database options (ADR 0003): checksum pages; row versioning so POS reads never block on writes. -->
+    <PageVerify>CHECKSUM</PageVerify>
+    <ReadCommittedSnapshot>True</ReadCommittedSnapshot>
+    <AllowSnapshotIsolation>True</AllowSnapshotIsolation>
+    <Recovery>FULL</Recovery>
+  </PropertyGroup>
+  <ItemGroup>
+    <Build Remove="Scripts\**" />
+    <PostDeploy Include="Scripts\Script.PostDeployment.sql" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Application: use cases, ports (interfaces), validation. Depends on Domain and Contracts only. -->
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FastXGen.Erp.Domain\FastXGen.Erp.Domain.csproj" />
+    <ProjectReference Include="..\FastXGen.Erp.Contracts\FastXGen.Erp.Contracts.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="FastXGen.Erp.UnitTests" />
+  </ItemGroup>
+</Project>
