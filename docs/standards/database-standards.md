@@ -43,7 +43,8 @@ Schemas (create each when its module starts):
 | Object | Pattern | Example |
 |---|---|---|
 | Table | singular PascalCase | `sales.Sale`, `sales.SaleLine` |
-| Primary key column | `<Table>Id` | `SaleId` |
+| Primary key column | `<Table>Id` (type per section 3) | `SaleId`, `UserId` |
+| Display number | `DocumentNumber` | `INV-BR03-2026-000123` |
 | Procedure | `usp_<Entity>_<Action>` | `sales.usp_Sale_Create`, `catalog.usp_Product_List` |
 | Type (TVP) | `<Entity>Type` | `sales.SaleLineType` |
 | Function | `fn_<Name>` | `security.fn_TenantAccessPredicate` |
@@ -58,24 +59,60 @@ Schemas (create each when its module starts):
 Standard actions: `Create`, `Update`, `Get` (one row), `List` (paged), `Search`, `Post` (ledger), `Void`,
 `Approve`, `Deactivate`. Pick from this list before inventing a new verb.
 
-## 3. Table template
+## 3. Table templates
+
+Which key a table gets (ADR 0006):
+
+| Table holds | Key column | Type |
+|---|---|---|
+| Identity records: users, roles, sessions, terminals, API keys | `<Entity>Id` | `UNIQUEIDENTIFIER DEFAULT NEWSEQUENTIALID()` |
+| Business records: products, sales, lines, movements, payments | `<Entity>Id` | `BIGINT IDENTITY (1, 1)` |
+| Documents people see (invoice, receipt, PO, GRN) | `<Entity>Id` + `DocumentNumber` | `BIGINT` + `NVARCHAR (30)` from `document.usp_DocumentNumber_Next` |
+| Who did it (`CreatedByUserId`, `ApprovedByUserId`) | | `UNIQUEIDENTIFIER` |
+
+### Business record
 
 ```sql
 CREATE TABLE [catalog].[Product]
 (
-    [TenantId]        INT            NOT NULL,
-    [ProductId]       BIGINT         IDENTITY (1, 1) NOT NULL,
-    [Sku]             NVARCHAR (50)  NOT NULL,
-    [Name]            NVARCHAR (200) NOT NULL,
-    [IsActive]        BIT            NOT NULL CONSTRAINT [DF_Product_IsActive] DEFAULT (1),
-    [CreatedAtUtc]    DATETIME2 (3)  NOT NULL CONSTRAINT [DF_Product_CreatedAtUtc] DEFAULT (SYSUTCDATETIME()),
-    [CreatedByUserId] BIGINT         NOT NULL,
-    [UpdatedAtUtc]    DATETIME2 (3)  NULL,
-    [UpdatedByUserId] BIGINT         NULL,
-    [RowVersion]      ROWVERSION     NOT NULL,
+    [TenantId]        INT              NOT NULL,
+    [ProductId]       BIGINT           IDENTITY (1, 1) NOT NULL,
+    [Sku]             NVARCHAR (50)    NOT NULL,
+    [Name]            NVARCHAR (200)   NOT NULL,
+    [IsActive]        BIT              NOT NULL CONSTRAINT [DF_Product_IsActive] DEFAULT (1),
+    [CreatedAtUtc]    DATETIME2 (3)    NOT NULL CONSTRAINT [DF_Product_CreatedAtUtc] DEFAULT (SYSUTCDATETIME()),
+    [CreatedByUserId] UNIQUEIDENTIFIER NOT NULL,
+    [UpdatedAtUtc]    DATETIME2 (3)    NULL,
+    [UpdatedByUserId] UNIQUEIDENTIFIER NULL,
+    [RowVersion]      ROWVERSION       NOT NULL,
     CONSTRAINT [PK_Product] PRIMARY KEY CLUSTERED ([TenantId], [ProductId]),
     CONSTRAINT [UQ_Product_Sku] UNIQUE ([TenantId], [Sku])
 );
+```
+
+### Identity record
+
+```sql
+CREATE TABLE [identity].[User]
+(
+    [TenantId]           INT              NOT NULL,
+    [UserId]             UNIQUEIDENTIFIER NOT NULL CONSTRAINT [DF_User_UserId] DEFAULT (NEWSEQUENTIALID()),
+    [UserName]           NVARCHAR (100)   NOT NULL,
+    [NormalizedUserName] NVARCHAR (100)   NOT NULL,
+    -- ...
+    [RowVersion]         ROWVERSION       NOT NULL,
+    CONSTRAINT [PK_User] PRIMARY KEY CLUSTERED ([TenantId], [UserId]),
+    CONSTRAINT [UQ_User_NormalizedUserName] UNIQUE ([TenantId], [NormalizedUserName])
+);
+```
+
+The insert procedure returns the generated key with `OUTPUT`, because `SCOPE_IDENTITY()` only works for
+`IDENTITY` columns:
+
+```sql
+    INSERT INTO [identity].[User] ([TenantId], [UserName], [NormalizedUserName], ...)
+    OUTPUT INSERTED.[UserId]
+    VALUES (@TenantId, @UserName, @NormalizedUserName, ...);
 ```
 
 Then add the table to `security/SecurityPolicies/TenantIsolationPolicy.sql`:
@@ -98,7 +135,7 @@ Every procedure starts with the same header. The tenant comes from `SESSION_CONT
 ```sql
 CREATE PROCEDURE [sales].[usp_Sale_Create]
     @BranchId        BIGINT,
-    @TerminalId      BIGINT,
+    @TerminalId      UNIQUEIDENTIFIER,
     @CustomerId      BIGINT = NULL,
     @SaleDate        DATE,
     @TotalAmount     DECIMAL (18, 4),
@@ -110,7 +147,7 @@ BEGIN
     SET XACT_ABORT ON;
 
     DECLARE @TenantId INT    = CAST(SESSION_CONTEXT(N'TenantId') AS INT);
-    DECLARE @UserId   BIGINT = CAST(SESSION_CONTEXT(N'UserId') AS BIGINT);
+    DECLARE @UserId   UNIQUEIDENTIFIER = CAST(SESSION_CONTEXT(N'UserId') AS UNIQUEIDENTIFIER);
 
     IF @TenantId IS NULL OR @UserId IS NULL
         THROW 50403, N'No tenant or user context.', 1;

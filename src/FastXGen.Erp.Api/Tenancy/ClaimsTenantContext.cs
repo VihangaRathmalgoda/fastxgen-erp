@@ -14,7 +14,7 @@ internal sealed class ClaimsTenantContext(IHttpContextAccessor httpContextAccess
 
     public int? TenantId => ReadClaim(TenantClaim, int.Parse);
 
-    public long? UserId => ReadClaim(UserClaim, long.Parse);
+    public Guid? UserId => ReadClaim(UserClaim, Guid.Parse);
 
     private T? ReadClaim<T>(string type, Func<string, IFormatProvider, T> parse)
         where T : struct

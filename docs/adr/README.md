@@ -12,7 +12,7 @@ New ADR: copy `0000-template.md`, take the next number, open it in the same PR a
 | [0003](0003-database-as-code.md) | Database as code: SQL project, offline build, reviewed scripts | Accepted |
 | [0004](0004-tenant-isolation.md) | Tenant isolation: shared database, SESSION_CONTEXT and Row-Level Security | Accepted |
 | [0005](0005-business-logic-placement.md) | C# decides, SQL stores | Accepted |
-| [0006](0006-keys-money-and-time.md) | Keys, money and time types | Accepted |
+| [0006](0006-keys-money-and-time.md) | Identifiers (identity GUIDs, record ids, display numbers), money and time | Accepted |
 | [0007](0007-error-contract.md) | Error contract: THROW codes to ProblemDetails | Accepted |
 | [0008](0008-immutable-source-transactions.md) | Source transactions are immutable; adjustments are separate | Accepted |
 | [0009](0009-rules-as-metadata.md) | Business rules as versioned JSON metadata | Accepted |
@@ -20,5 +20,5 @@ New ADR: copy `0000-template.md`, take the next number, open it in the same PR a
 | [0011](0011-testing-strategy.md) | Testing strategy and where databases may run | Accepted |
 | [0012](0012-input-validation-and-api-hardening.md) | Input validation and API hardening | Accepted |
 | [0013](0013-user-messages-and-notifications.md) | User messages, alerts and notifications | Accepted |
-| 0014 | Authentication and identity provider | **Open**, decide before Phase 1 |
+| [0014](0014-authentication.md) | Authentication: ASP.NET Core Identity with stored-procedure stores | Accepted |
 | 0015 | Frontend stack details (UI kit, offline POS) | **Open**, decide before frontend scaffold |

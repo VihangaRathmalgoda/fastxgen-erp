@@ -18,7 +18,7 @@ public sealed class SessionContextTests
             ApplicationName = "fastxgen-session-context-test",
         }.ConnectionString;
 
-        await using (var first = await TestDatabase.ConnectionFactoryFor(42, 7, connectionString).OpenAsync(Ct))
+        await using (var first = await TestDatabase.ConnectionFactoryFor(42, Guid.NewGuid(), connectionString).OpenAsync(Ct))
         {
             Assert.Equal(42, await ReadTenantAsync(first));
         }
@@ -28,10 +28,23 @@ public sealed class SessionContextTests
     }
 
     [Fact]
+    public async Task User_key_reaches_the_database_as_a_guid()
+    {
+        var userId = Guid.NewGuid();
+        await using var connection = await TestDatabase
+            .ConnectionFactoryFor(42, userId, TestDatabase.ConnectionString())
+            .OpenAsync(Ct);
+
+        await using var command = new SqlCommand("SELECT CAST(SESSION_CONTEXT(N'UserId') AS UNIQUEIDENTIFIER);", connection);
+
+        Assert.Equal(userId, (Guid)(await command.ExecuteScalarAsync(Ct))!);
+    }
+
+    [Fact]
     public async Task Tenant_in_session_context_cannot_be_overwritten()
     {
         await using var connection = await TestDatabase
-            .ConnectionFactoryFor(42, 7, TestDatabase.ConnectionString())
+            .ConnectionFactoryFor(42, Guid.NewGuid(), TestDatabase.ConnectionString())
             .OpenAsync(Ct);
 
         await using var command = new SqlCommand("EXEC sys.sp_set_session_context N'TenantId', 99;", connection);

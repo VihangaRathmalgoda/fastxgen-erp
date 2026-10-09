@@ -55,6 +55,9 @@ Modular monolith, Clean Architecture. Projects and what they may reference:
   Corrections are new records (return, void, adjustment) linked to the original.
 - Reporting/tax changes live in a separate transformation layer; reports show source and transformed totals.
 - Stock is an append-only `StockMovement` ledger; balances are derived and must reconcile.
+- Ids (ADR 0006): users, roles, sessions, terminals, API keys = `UNIQUEIDENTIFIER DEFAULT NEWSEQUENTIALID()`;
+  business records = `BIGINT IDENTITY` (never shown); documents get a display number (`INV-BR03-2026-000123`);
+  tenant = `TenantId INT` internally + `TenantKey UNIQUEIDENTIFIER` publicly.
 - Types: money and quantity `DECIMAL(18,4)`, rates `DECIMAL(9,6)`; never `float`/`real`/`money`.
   Instants `DATETIME2(3)` in UTC named `...AtUtc`; business dates `DATE`.
 - Concurrency-sensitive rows have `RowVersion ROWVERSION`; updates pass the version and fail with 50409 if stale.

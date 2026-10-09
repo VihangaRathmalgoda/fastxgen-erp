@@ -11,7 +11,7 @@ internal sealed class NotificationDraftValidator : AbstractValidator<Notificatio
 {
     public NotificationDraftValidator()
     {
-        RuleFor(draft => draft.RecipientUserId).EntityId();
+        RuleFor(draft => draft.RecipientUserId).EntityKey();
         RuleFor(draft => draft.Category).NotEmpty().Code(50);
         RuleFor(draft => draft.Severity).IsInEnum();
         RuleFor(draft => draft.Title).NotEmpty().PlainText(200);

@@ -71,6 +71,13 @@ public sealed class ValidationRulesTests
         Assert.Equal(expected, Validate(new Sample { Id = value }).IsValid);
     }
 
+    [Fact]
+    public void EntityKey_rejects_the_empty_guid()
+    {
+        Assert.False(Validate(new Sample { Key = Guid.Empty }).IsValid);
+        Assert.True(Validate(new Sample { Key = Guid.NewGuid() }).IsValid);
+    }
+
     [Theory]
     [InlineData("/inventory/products/42", true)]
     [InlineData("/sales/invoices?status=open", true)]
@@ -97,6 +104,8 @@ public sealed class ValidationRulesTests
 
         public long Id { get; init; } = 1;
 
+        public Guid Key { get; init; } = Guid.NewGuid();
+
         public string? Link { get; init; }
     }
 
@@ -109,6 +118,7 @@ public sealed class ValidationRulesTests
             RuleFor(sample => sample.Amount).Money();
             RuleFor(sample => sample.Quantity).Quantity();
             RuleFor(sample => sample.Id).EntityId();
+            RuleFor(sample => sample.Key).EntityKey();
             RuleFor(sample => sample.Link).AppLink();
         }
     }

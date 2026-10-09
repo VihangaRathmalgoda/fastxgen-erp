@@ -8,8 +8,8 @@ namespace FastXGen.Erp.IntegrationTests.Database;
 [Trait("Category", TestDatabase.Category)]
 public sealed class NotificationStoreTests
 {
-    private const long UserA = 10;
-    private const long UserB = 11;
+    private static readonly Guid UserA = Guid.NewGuid();
+    private static readonly Guid UserB = Guid.NewGuid();
 
     private readonly int _tenant1 = TestDatabase.NewTenantId();
     private readonly int _tenant2 = TestDatabase.NewTenantId();
@@ -76,7 +76,7 @@ public sealed class NotificationStoreTests
 
     private static CancellationToken Ct => TestContext.Current.CancellationToken;
 
-    private static NotificationStore StoreFor(int? tenantId, long? userId) =>
+    private static NotificationStore StoreFor(int? tenantId, Guid? userId) =>
         new(TestDatabase.ExecutorFor(tenantId, userId));
 
     private static NotificationDraft Draft(string title) => new(

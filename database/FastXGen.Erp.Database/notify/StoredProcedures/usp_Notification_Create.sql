@@ -4,7 +4,7 @@
     CreatedByUserId is NULL when the system raised the notification.
 */
 CREATE PROCEDURE [notify].[usp_Notification_Create]
-    @RecipientUserId BIGINT,
+    @RecipientUserId UNIQUEIDENTIFIER,
     @Category        NVARCHAR (50),
     @Severity        TINYINT,
     @Title           NVARCHAR (200),
@@ -15,8 +15,8 @@ BEGIN
     SET NOCOUNT ON;
     SET XACT_ABORT ON;
 
-    DECLARE @TenantId INT    = CAST(SESSION_CONTEXT(N'TenantId') AS INT);
-    DECLARE @UserId   BIGINT = CAST(SESSION_CONTEXT(N'UserId') AS BIGINT);
+    DECLARE @TenantId INT              = CAST(SESSION_CONTEXT(N'TenantId') AS INT);
+    DECLARE @UserId   UNIQUEIDENTIFIER = CAST(SESSION_CONTEXT(N'UserId') AS UNIQUEIDENTIFIER);
 
     IF @TenantId IS NULL
         THROW 50403, N'No tenant context.', 1;

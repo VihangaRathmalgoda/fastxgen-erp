@@ -6,8 +6,8 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    DECLARE @TenantId INT    = CAST(SESSION_CONTEXT(N'TenantId') AS INT);
-    DECLARE @UserId   BIGINT = CAST(SESSION_CONTEXT(N'UserId') AS BIGINT);
+    DECLARE @TenantId INT              = CAST(SESSION_CONTEXT(N'TenantId') AS INT);
+    DECLARE @UserId   UNIQUEIDENTIFIER = CAST(SESSION_CONTEXT(N'UserId') AS UNIQUEIDENTIFIER);
 
     IF @TenantId IS NULL OR @UserId IS NULL
         THROW 50403, N'No tenant or user context.', 1;

@@ -8,5 +8,5 @@ public interface ITenantContext
 {
     int? TenantId { get; }
 
-    long? UserId { get; }
+    Guid? UserId { get; }
 }

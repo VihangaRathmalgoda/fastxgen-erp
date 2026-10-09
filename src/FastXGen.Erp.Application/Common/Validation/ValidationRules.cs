@@ -46,9 +46,18 @@ public static partial class ValidationRules
         rule.InclusiveBetween(0m, 100m)
             .PrecisionScale(9, 6, ignoreTrailingZeros: true);
 
-    /// <summary>Identifier of an existing record. Whether it exists and is visible is checked by the procedure.</summary>
+    /// <summary>
+    /// BIGINT id of a business record (product, sale, movement). Whether it exists and is visible
+    /// is checked by the procedure.
+    /// </summary>
     public static IRuleBuilderOptions<T, long> EntityId<T>(this IRuleBuilder<T, long> rule) =>
         rule.GreaterThan(0L);
+
+    /// <summary>GUID key of an identity record (user, role, session, terminal). The empty GUID is rejected.</summary>
+    public static IRuleBuilderOptions<T, Guid> EntityKey<T>(this IRuleBuilder<T, Guid> rule) =>
+        rule.NotEqual(Guid.Empty)
+            .WithErrorCode("validation.empty_key")
+            .WithMessage("'{PropertyName}' is required.");
 
     public static IRuleBuilderOptions<T, string?> Email<T>(this IRuleBuilder<T, string?> rule) =>
         rule.MaximumLength(254)

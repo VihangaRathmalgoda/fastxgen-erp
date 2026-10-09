@@ -25,18 +25,18 @@ internal static class TestDatabase
     }
 
     /// <summary>A SQL executor acting as the given tenant and user, exactly as the API would.</summary>
-    public static ISqlExecutor ExecutorFor(int? tenantId, long? userId, string? connectionString = null)
+    public static ISqlExecutor ExecutorFor(int? tenantId, Guid? userId, string? connectionString = null)
     {
         var options = Options.Create(new DatabaseOptions { ConnectionString = connectionString ?? ConnectionString() });
         var factory = new SqlConnectionFactory(options, new FixedTenantContext(tenantId, userId));
         return new SqlExecutor(factory, options);
     }
 
-    public static SqlConnectionFactory ConnectionFactoryFor(int? tenantId, long? userId, string connectionString) =>
+    public static SqlConnectionFactory ConnectionFactoryFor(int? tenantId, Guid? userId, string connectionString) =>
         new(Options.Create(new DatabaseOptions { ConnectionString = connectionString }), new FixedTenantContext(tenantId, userId));
 
     /// <summary>A tenant id no other test run uses, so tests never see each other's rows.</summary>
     public static int NewTenantId() => Random.Shared.Next(1_000_000, int.MaxValue);
 
-    private sealed record FixedTenantContext(int? TenantId, long? UserId) : ITenantContext;
+    private sealed record FixedTenantContext(int? TenantId, Guid? UserId) : ITenantContext;
 }

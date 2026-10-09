@@ -8,7 +8,7 @@ namespace FastXGen.Erp.Application.Abstractions.Notifications;
 /// <c>Link</c> optionally points inside the application, for example "/inventory/products/42".
 /// </summary>
 public sealed record NotificationDraft(
-    long RecipientUserId,
+    Guid RecipientUserId,
     string Category,
     MessageSeverity Severity,
     string Title,

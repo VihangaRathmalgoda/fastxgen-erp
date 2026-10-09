@@ -41,6 +41,17 @@ public sealed class NotificationPublisherTests
     }
 
     [Fact]
+    public async Task Empty_recipient_key_is_rejected()
+    {
+        var draft = Draft() with { RecipientUserId = Guid.Empty };
+
+        var exception = await Assert.ThrowsAsync<RequestValidationException>(
+            () => _publisher.PublishAsync(draft, TestContext.Current.CancellationToken));
+
+        Assert.Contains(nameof(NotificationDraft.RecipientUserId), exception.Errors.Keys);
+    }
+
+    [Fact]
     public async Task Unknown_severity_value_is_rejected()
     {
         var draft = Draft() with { Severity = (MessageSeverity)9 };
@@ -50,7 +61,7 @@ public sealed class NotificationPublisherTests
     }
 
     private static NotificationDraft Draft() => new(
-        RecipientUserId: 10,
+        RecipientUserId: Guid.Parse("0d4f6a2e-1c3b-4e5f-8a9b-7c6d5e4f3a2b"),
         Category: "inventory.low_stock",
         Severity: MessageSeverity.Warning,
         Title: "Low stock: Coca-Cola 500ml",
